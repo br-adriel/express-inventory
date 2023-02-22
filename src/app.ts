@@ -5,6 +5,7 @@ import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import path from 'path';
+import categoryRoutes from './routes/CategoryRoutes';
 
 /* Environment variables configuration */
 dotenv.config();
@@ -34,6 +35,8 @@ app.use(compression());
 app.get('/', (req: Request, res: Response) => {
   res.send("it's working");
 });
+
+app.use('/category', categoryRoutes);
 
 /* Server */
 app.listen(port, () => {
