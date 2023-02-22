@@ -1,5 +1,7 @@
+import async from 'async';
 import { NextFunction, Request, Response } from 'express';
-import Category, { CategoryType } from '../models/Category';
+import Category from '../models/Category';
+import Item from '../models/Item';
 
 /** Lista todas as categorias */
 export const categories_list_get = (
@@ -21,7 +23,22 @@ export const category_detail_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Detalhes de uma categoria');
+  async.parallel(
+    {
+      category(callback) {
+        Category.findById(req.params.id).exec(callback);
+      },
+      items_count(callback) {
+        Item.find({ category: req.params.id }).count().exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      res.render('category_detail', {
+        ...results,
+      });
+    }
+  );
 };
 
 /** Retorna página com formulário para criação de categoria */
