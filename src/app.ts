@@ -24,6 +24,10 @@ async function main() {
   await mongoose.connect(mongoDB || '');
 }
 
+/* Template engine */
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
 /* Middlewares */
 app.use(helmet());
 app.use(express.json());
