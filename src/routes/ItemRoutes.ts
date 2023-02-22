@@ -1,52 +1,19 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
+import * as itemController from '../controllers/ItemController';
 
 const itemRoutes = Router();
 
-itemRoutes.get('/', (req: Request, res: Response, next: NextFunction) => {
-  return res.send('Lista todas os itens');
-});
+itemRoutes.get('/', itemController.item_list_get);
 
-itemRoutes.get('/:id', (req: Request, res: Response, next: NextFunction) => {
-  return res.send('Detalhes de um item');
-});
+itemRoutes.get('/:id', itemController.item_detail_get);
 
-itemRoutes.get('/create', (req: Request, res: Response, next: NextFunction) => {
-  return res.send('Página de criação de item');
-});
+itemRoutes.get('/create', itemController.item_create_get);
+itemRoutes.post('/create', itemController.item_create_post);
 
-itemRoutes.post(
-  '/create',
-  (req: Request, res: Response, next: NextFunction) => {
-    return res.send('Criação de item');
-  }
-);
+itemRoutes.get('/:id/update', itemController.item_update_get);
+itemRoutes.post('/:id/update', itemController.item_update_post);
 
-itemRoutes.get(
-  '/:id/update',
-  (req: Request, res: Response, next: NextFunction) => {
-    return res.send('Página de atualização de item');
-  }
-);
-
-itemRoutes.post(
-  '/:id/update',
-  (req: Request, res: Response, next: NextFunction) => {
-    return res.send('Atualização de item');
-  }
-);
-
-itemRoutes.get(
-  '/:id/remove',
-  (req: Request, res: Response, next: NextFunction) => {
-    return res.send('Página de remoção de item');
-  }
-);
-
-itemRoutes.post(
-  '/:id/remove',
-  (req: Request, res: Response, next: NextFunction) => {
-    return res.send('Remoção de item');
-  }
-);
+itemRoutes.get('/:id/remove', itemController.item_remove_get);
+itemRoutes.post('/:id/remove', itemController.item_remove_post);
 
 export default itemRoutes;
