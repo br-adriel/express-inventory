@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import path from 'path';
 import categoryRoutes from './routes/CategoryRoutes';
+import itemRoutes from './routes/ItemRoutes';
 
 /* Environment variables configuration */
 dotenv.config();
@@ -37,6 +38,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/category', categoryRoutes);
+app.use('/item', itemRoutes);
 
 /* Server */
 app.listen(port, () => {
