@@ -1,0 +1,10 @@
+extends base
+
+block content
+  h1 Listagem de categorias
+  ul
+    each category in categories
+      li
+        a(href=category.url) #{category.name}
+    else
+      li Nenhuma categoria encontrada
