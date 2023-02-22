@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import Category, { CategoryType } from '../models/Category';
 
 /** Lista todas as categorias */
 export const categories_list_get = (
@@ -6,7 +7,12 @@ export const categories_list_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Lista todas as categorias');
+  Category.find().exec((err, categories) => {
+    if (err) return next(err);
+    return res.render('category_list', {
+      categories,
+    });
+  });
 };
 
 /** Retorna detalhes de uma categoria específica */
