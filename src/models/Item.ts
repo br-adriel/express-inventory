@@ -6,6 +6,7 @@ export type ItemType = {
   category: Types.ObjectId[];
   price: number;
   stock: number;
+  url: string;
 };
 
 const ItemSchema = new Schema<ItemType>({
