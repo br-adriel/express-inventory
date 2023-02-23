@@ -4,6 +4,8 @@ block content
   if item
     h2 #{item.name}
     p #{item.description}
+    p Preço: #{item.priceFormatted}
+    p Em estoque: #{item.stock}
     if (item.category.length)
       p Categorias: #{item.category.map(c => c.name).join(', ')}
     else
