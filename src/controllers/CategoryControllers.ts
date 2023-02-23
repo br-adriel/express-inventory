@@ -89,7 +89,12 @@ export const category_update_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Página de atualização de categoria');
+  Category.findById(req.params.id).exec((err, category) => {
+    if (err) return next(err);
+    if (!category) return res.render('404');
+
+    return res.render('category_update', { category });
+  });
 };
 
 /** Recebe dados para atualização de uma categoria */
