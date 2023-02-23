@@ -47,7 +47,7 @@ export const category_create_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Página de criação de categoria');
+  return res.render('category_create');
 };
 
 /** Recebe dados para criação de uma categoria */
