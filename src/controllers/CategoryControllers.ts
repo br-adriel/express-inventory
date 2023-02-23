@@ -13,7 +13,7 @@ export const categories_list_get = (
 ) => {
   Category.find().exec((err, categories) => {
     if (err) return next(err);
-    return res.render('category_list', {
+    return res.render('category/category_list', {
       categories,
     });
   });
@@ -36,7 +36,7 @@ export const category_detail_get = (
     },
     (err, results) => {
       if (err) return next(err);
-      res.render('category_detail', {
+      res.render('category/category_detail', {
         ...results,
       });
     }
@@ -49,7 +49,7 @@ export const category_create_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.render('category_create');
+  return res.render('category/category_create');
 };
 
 /** Recebe dados para criação de uma categoria */
@@ -65,7 +65,7 @@ export const category_create_post = [
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render('category_create', {
+      res.render('category/category_create', {
         category: req.body,
         errors: errors.array(),
       });
@@ -93,7 +93,7 @@ export const category_update_get = (
     if (err) return next(err);
     if (!category) return res.render('404');
 
-    return res.render('category_update', { category });
+    return res.render('category/category_update', { category });
   });
 };
 
@@ -110,7 +110,7 @@ export const category_update_post = [
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render('category_update', {
+      res.render('category/category_update', {
         category: req.body,
         errors: errors.array(),
       });
@@ -147,7 +147,7 @@ export const category_remove_get = (
     },
     (err, results) => {
       if (err) return next(err);
-      return res.render('category_remove', {
+      return res.render('category/category_remove', {
         category: results.category,
         items_count: results.items_count,
       });
