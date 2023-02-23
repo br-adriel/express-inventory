@@ -6,7 +6,7 @@ block content
     p #{category.description}
     p #{items_count} produto#{items_count !== 1 ? 's' : null} nessa categoria
 
-    a(href=`/category/${category_id}/update`) Editar
-    a(href=`/category/${category_id}/remove`) Remover
+    a(href=`/category/${category._id}/update`) Editar
+    a(href=`/category/${category._id}/remove`) Remover
   else
     h2 Categoria não encontrada
