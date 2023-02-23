@@ -1,0 +1,28 @@
+extends ../base
+
+block content
+  h2 Editar item
+  form(action="", method="post")
+    div
+      label(for="name") Nome:
+      input(type="text" name="name" id="name" maxLength="80" required value=item.name)
+    div
+      label(for="description") Descrição:
+      textarea(name="description", cols="30", rows="10" id="description" maxLength="180" value=item.description)
+    div
+      label(for="category") Categoria(s):
+      select(name="category" id="category" multiple)
+        each category in categories
+          - if (item.category.includes(category._id))
+            option(value=category._id selected) #{category.name}
+          - else
+            option(value=category._id) #{category.name}
+        else
+          option(value="") ----------
+    div
+      label(for="price") Preço:
+      input(type="number", name="price" id="price" min="0.01" step="0.01" required value=item.price) 
+    div
+      label(for="stock") Quantidade em estoque:
+      input(type="number", name="stock" id="stock" min="0" required value=item.stock)
+    button(type="submit") Salvar

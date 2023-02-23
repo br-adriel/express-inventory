@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
-import { Types } from 'mongoose';
+import async from 'async';
 import Category from '../models/Category';
 import Item from '../models/Item';
 
@@ -95,17 +95,66 @@ export const item_update_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Página de atualização de item');
+  async.parallel(
+    {
+      categories(callback) {
+        Category.find({}).exec(callback);
+      },
+      item(callback) {
+        Item.findById(req.params.id).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      return res.render('item/item_update', {
+        ...results,
+      });
+    }
+  );
 };
 
 /** Recebe dados para atualização de um item */
-export const item_update_post = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  return res.send('Atualização de item');
-};
+export const item_update_post = [
+  body('name')
+    .trim()
+    .isLength({ min: 1, max: 80 })
+    .escape()
+    .withMessage('Itens devem ter um nome de até 80 caracteres'),
+
+  body('description').optional().trim().isLength({ max: 180 }).escape(),
+
+  body('category').optional().toArray(),
+
+  body('price').isNumeric().isFloat({ min: 0.01 }).escape(),
+
+  body('stock').isNumeric().isInt({ min: 0 }),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body.category);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render('item/item_update', {
+        errors: errors.array(),
+        item: req.body,
+      });
+    }
+
+    const updatedItem = new Item({
+      _id: req.params.id,
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      price: req.body.price,
+      stock: req.body.stock,
+    });
+
+    Item.findByIdAndUpdate(req.params.id, updatedItem, {}, (err) => {
+      if (err) return next(err);
+      return res.redirect(updatedItem.url);
+    });
+  },
+];
 
 /** Retorna página com formulário de confirmação de exclusão de item */
 export const item_remove_get = (
