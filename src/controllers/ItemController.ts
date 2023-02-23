@@ -1,3 +1,4 @@
+import async from 'async';
 import { NextFunction, Request, Response } from 'express';
 import Item from '../models/Item';
 
@@ -21,7 +22,14 @@ export const item_detail_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Detalhes de um item');
+  Item.findById(req.params.id)
+    .populate('category')
+    .exec((err, item) => {
+      if (err) return next(err);
+      res.render('item/item_detail', {
+        item,
+      });
+    });
 };
 
 /** Retorna página com formulário para criação de item */

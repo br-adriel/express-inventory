@@ -1,0 +1,15 @@
+extends ../base
+
+block content
+  if item
+    h2 #{item.name}
+    p #{item.description}
+    if (item.category.length)
+      p Categorias: #{item.category.map(c => c.name).join(', ')}
+    else
+      p Item não categorizado
+
+    a(href=`/item/${item._id}/update`) Editar
+    a(href=`/item/${item._id}/remove`) Remover
+  else
+    h2 Item não encontrado
