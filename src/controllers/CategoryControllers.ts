@@ -98,13 +98,37 @@ export const category_update_get = (
 };
 
 /** Recebe dados para atualização de uma categoria */
-export const category_update_post = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  return res.send('Atualização de categoria');
-};
+export const category_update_post = [
+  body('name')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage('A categoria precisa ter um nome'),
+
+  body('description').optional().trim().escape(),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render('category_update', {
+        category: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    const updatedCategory = new Category({
+      _id: req.params.id,
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    Category.findByIdAndUpdate(req.params.id, updatedCategory, {}, (err) => {
+      if (err) return next(err);
+      res.redirect(updatedCategory.url);
+    });
+  },
+];
 
 /** Retorna página com formulário de confirmação de exclusão de categoria */
 export const category_remove_get = (
