@@ -41,7 +41,7 @@ app.use(compression());
 
 /* Routes */
 app.get('/', (req: Request, res: Response) => {
-  res.send("it's working");
+  res.redirect('/category');
 });
 
 app.use('/category', categoryRoutes);
