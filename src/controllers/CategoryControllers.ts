@@ -1,6 +1,8 @@
 import async from 'async';
 import { NextFunction, Request, Response } from 'express';
-import Category from '../models/Category';
+import { body } from 'express-validator';
+import { validationResult } from 'express-validator/src/validation-result';
+import Category, { CategoryType } from '../models/Category';
 import Item from '../models/Item';
 
 /** Lista todas as categorias */
@@ -51,13 +53,35 @@ export const category_create_get = (
 };
 
 /** Recebe dados para criação de uma categoria */
-export const category_create_post = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  return res.send('Criação de categoria');
-};
+export const category_create_post = [
+  body('name')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage('Novas categorias precisam ter um nome'),
+
+  body('description').optional().trim().escape(),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render('category_create', {
+        category: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    const newCategory = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    });
+    newCategory.save((err) => {
+      if (err) return next(err);
+      res.redirect(newCategory.url);
+    });
+  },
+];
 
 /** Retorna página com formulário para atualização de categoria */
 export const category_update_get = (

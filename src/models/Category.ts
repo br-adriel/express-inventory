@@ -3,6 +3,7 @@ import { Schema, Types, model } from 'mongoose';
 export type CategoryType = {
   name: string;
   description?: string;
+  url: string;
 };
 
 const CategorySchema = new Schema<CategoryType>({
