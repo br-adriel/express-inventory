@@ -1,0 +1,8 @@
+extends base
+
+block content
+  h2 Remover a categoria "#{category.name}"?
+  p #{items_count} itens possuem essa categoria
+  form(action="", method="post")
+    a(href=`/category/${category.id}`) Cancelar
+    button(type="submit") Remover
