@@ -1,0 +1,12 @@
+extends base
+
+block content
+  h2 Editar categoria
+  form(action="", method="post")
+    div
+      label(for="name") Nome:
+      input(type="text" name="name" id="name" maxLength="50" required value=category.name)
+    div
+      label(for="description") Descrição:
+      textarea(name="description", cols="30", rows="10" id="description" value=category.description) 
+    button(type="submit") Salvar
