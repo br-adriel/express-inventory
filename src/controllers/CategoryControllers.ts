@@ -136,7 +136,23 @@ export const category_remove_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Página de remoção de categoria');
+  async.parallel(
+    {
+      category(callback) {
+        Category.findById(req.params.id).exec(callback);
+      },
+      items_count(callback) {
+        Item.find({ category: req.params.id }).count().exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      return res.render('category_remove', {
+        category: results.category,
+        items_count: results.items_count,
+      });
+    }
+  );
 };
 
 /** Remove categoria com o respectivo id passado */
@@ -145,5 +161,8 @@ export const category_remove_post = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Remoção de categoria');
+  Category.findByIdAndRemove(req.params.id, (err: any) => {
+    if (err) return next(err);
+    return res.redirect('/category');
+  });
 };
