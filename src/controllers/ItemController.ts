@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import Item from '../models/Item';
 
 /** Lista todos os items */
 export const item_list_get = (
@@ -6,7 +7,12 @@ export const item_list_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Lista todas os itens');
+  Item.find().exec((err, items) => {
+    if (err) return next(err);
+    return res.render('item/item_list', {
+      items,
+    });
+  });
 };
 
 /** Retorna detalhes de um item específica */

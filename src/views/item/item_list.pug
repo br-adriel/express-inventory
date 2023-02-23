@@ -1,0 +1,11 @@
+extends ../base
+
+block content
+  h1 Listagem de itens
+  a(href="/item/create") Novo item
+  ul
+    each item in items
+      li
+        a(href=item.url) #{item.name}
+    else
+      li Nenhum item encontrado
