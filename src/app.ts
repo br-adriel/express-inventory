@@ -1,9 +1,11 @@
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
+import createHttpError from 'http-errors';
 import mongoose from 'mongoose';
+import logger from 'morgan';
 import path from 'path';
 import categoryRoutes from './routes/CategoryRoutes';
 import itemRoutes from './routes/ItemRoutes';
@@ -29,6 +31,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 /* Middlewares */
+app.use(logger('dev'));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,6 +46,11 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/category', categoryRoutes);
 app.use('/item', itemRoutes);
+
+/* Error handler */
+app.use(function (req: Request, res: Response, next: NextFunction) {
+  next(createHttpError(404));
+});
 
 /* Server */
 app.listen(port, () => {
