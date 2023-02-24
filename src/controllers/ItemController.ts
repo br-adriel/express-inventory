@@ -1,6 +1,6 @@
+import async from 'async';
 import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
-import async from 'async';
 import Category from '../models/Category';
 import Item from '../models/Item';
 
@@ -162,7 +162,10 @@ export const item_remove_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Página de remoção de item');
+  Item.findById(req.params.id).exec((err, item) => {
+    if (err) return next(err);
+    return res.render('item/item_remove', { item });
+  });
 };
 
 /** Remove item com o respectivo id passado */
@@ -171,5 +174,8 @@ export const item_remove_post = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.send('Remoção de item');
+  Item.findByIdAndRemove(req.params.id, {}, (err) => {
+    if (err) return next(err);
+    return res.redirect('/item');
+  });
 };
