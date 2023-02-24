@@ -47,6 +47,11 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/category', categoryRoutes);
 app.use('/item', itemRoutes);
 
+/* Página 404 */
+app.get('*', (req: Request, res: Response) => {
+  res.render('404');
+});
+
 /* Error handler */
 app.use(function (req: Request, res: Response, next: NextFunction) {
   next(createHttpError(404));
