@@ -4,14 +4,29 @@ html(lang="pt-br")
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color" content="#686DE0")
+
+    title #{title || 'Inventory'}
+
+    script(src="./js/feather.min.js")
+
+    link(rel="stylesheet", href="./css/reset.css")
+    link(rel="stylesheet", href="./css/style.css")
 
     block head
   body 
     header
+      h1 Inventory
       nav
         ul
-          li
-            a(href="/category") Categorias
-          li
-            a(href="/item") Itens
+          li(class=activeLink === 'category' ? 'active' : '')
+            a(href="/category")
+              i(data-feather="tag")
+              span Categorias
+          li(class=activeLink === 'item' ? 'active' : '')
+            a(href="/item")
+              i(data-feather="box")
+              span Itens
     block content
+    script.
+      feather.replace()
