@@ -59,6 +59,7 @@ header nav ul li {
 
 header nav ul li span {
   display: none;
+  font-weight: 700;
 }
 
 header nav ul li.active {
