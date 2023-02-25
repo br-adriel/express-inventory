@@ -167,6 +167,7 @@ button,
   gap: 8px;
   transition: 0.3s all ease-out;
   border: none;
+  cursor: pointer;
 }
 
 .btn.btn-primary {
