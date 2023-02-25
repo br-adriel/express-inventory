@@ -10,10 +10,10 @@ block content
         li
           a.btn.btn-primary(href="/category/create" title="Adicionar categoria")
             i(data-feather="plus")
-      if categories
+      if categories.length
         ul.list
           each category in categories
             li
               a.category-item(href=category.url) #{category.name}
       else
-        li Nenhuma categoria encontrada
+        p.no-elements-warning Nenhuma categoria encontrada
