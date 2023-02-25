@@ -6,6 +6,7 @@ export type ItemType = {
   category: Types.ObjectId[];
   price: number;
   stock: number;
+  image?: string;
   url: string;
   priceFormatted: string;
 };
@@ -16,6 +17,7 @@ const ItemSchema = new Schema<ItemType>({
   category: [{ type: Types.ObjectId, ref: 'Category' }],
   price: { type: Number, min: 0.01, required: true },
   stock: { type: Number, required: true, min: 0 },
+  image: { type: String },
 });
 
 ItemSchema.virtual('url').get(function (
