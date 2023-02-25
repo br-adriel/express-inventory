@@ -14,7 +14,7 @@ block content
           each item in items
             li
               a(href=item.url).item-list__item.bg-secondary.rounded
-                img(src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg', alt="" crossOrigin="anonymous")
+                img(src=item.image || '/img/item/default.jpg')
                 div
                   div
                     h3 #{item.name}

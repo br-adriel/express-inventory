@@ -34,16 +34,10 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(
   helmet({
-    crossOriginEmbedderPolicy: false,
     contentSecurityPolicy: {
       directives: {
-        imgSrc: [`'self'`, `data:`, `https://cdn.pixabay.com`],
-        scriptSrc: [
-          `self`,
-          `'unsafe-eval'`,
-          `'unsafe-inline'`,
-          `http://localhost:3000`,
-        ],
+        imgSrc: [`'self'`, `data:`],
+        scriptSrc: [`'self'`, `'unsafe-eval'`, `'unsafe-inline'`],
       },
     },
   })

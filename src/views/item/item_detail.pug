@@ -6,7 +6,7 @@ block head
 block content
   main
     div.container
-      img(src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg', alt="" crossOrigin="anonymous").rounded
+      img(src=item.image || '/img/item/default.jpg', alt="").rounded
       div.item-details.bg-secondary.rounded
         h2 #{item.name}
         if item.description

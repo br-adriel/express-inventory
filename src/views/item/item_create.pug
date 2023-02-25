@@ -20,7 +20,7 @@ block content
             label(for="category") Categoria(s):
             select(name="category" id="category" multiple)
               each category in categories
-                - if (item && item.category.includes(category._id))
+                - if (item && item.category && item.category.includes(category._id))
                   option(value=category._id selected) #{category.name}
                 - else 
                   option(value=category._id) #{category.name}
@@ -32,4 +32,7 @@ block content
           div.form-group
             label(for="stock") Quantidade em estoque:
             input(type="number", name="stock" id="stock" min="0" required value=item ? item.stock : '') 
+          div.form-group
+            label(for="image") Imagem:
+            input(type="file" name="image" id="image" accept="image/png, image/jpeg")
           button(type="submit").btn.btn-primary Salvar

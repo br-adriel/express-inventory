@@ -65,8 +65,8 @@ export const item_create_get = (
 export const item_create_post = [
   body('name')
     .trim()
-    .isLength({ min: 1, max: 80 })
     .escape()
+    .isLength({ min: 1, max: 80 })
     .withMessage('Novos itens devem ter um nome de até 80 caracteres'),
 
   body('description').optional().trim().isLength({ max: 180 }).escape(),
@@ -77,12 +77,13 @@ export const item_create_post = [
 
   body('stock').isNumeric().isInt({ min: 0 }),
 
-  (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.category);
-
+  async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+    const categories = await Category.find({});
+
     if (!errors.isEmpty()) {
       return res.render('item/item_create', {
+        categories,
         errors: errors.array(),
         item: req.body,
       });
