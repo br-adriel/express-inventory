@@ -32,8 +32,15 @@ export const item_detail_get = (
     .populate('category')
     .exec((err, item) => {
       if (err) return next(err);
+      if (!item)
+        return res.render('404', {
+          title: 'Item não encontrado',
+          activeLink: 'item',
+        });
       res.render('item/item_detail', {
         item,
+        activeLink: 'item',
+        title: `Detalhes do item "${item.name}" - Inventory`,
       });
     });
 };

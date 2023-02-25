@@ -1,17 +1,24 @@
 extends ../base
 
-block content
-  if item
-    h2 #{item.name}
-    p #{item.description}
-    p Preço: #{item.priceFormatted}
-    p Em estoque: #{item.stock}
-    if (item.category.length)
-      p Categorias: #{item.category.map(c => c.name).join(', ')}
-    else
-      p Item não categorizado
+block head
+  link(rel="stylesheet", href="/css/item/item_detail.css")
 
-    a(href=`/item/${item._id}/update`) Editar
-    a(href=`/item/${item._id}/remove`) Remover
-  else
-    h2 Item não encontrado
+block content
+  main
+    div.container
+      img(src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg', alt="" crossOrigin="anonymous").rounded
+      div.item-details.bg-secondary.rounded
+        h2 #{item.name}
+        if item.description
+          p #{item.description}
+        div.item-details__categories
+          i(data-feather='tag')
+          p #{item.category.length ? item.category.map(c => c.name).join(', ') : 'Item sem categoria'}
+      div.price-and-stock
+        p.price.bg-secondary.rounded #{item.priceFormatted}
+        p.stock.bg-secondary.rounded #{item.stock} em estoque
+  div.actions
+    a.btn.btn-primary(href=`/item/${item._id}/update`)
+      i(data-feather='edit-2')
+    a.btn.btn-primary(href=`/item/${item._id}/remove`)
+      i(data-feather='trash')

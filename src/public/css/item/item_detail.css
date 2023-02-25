@@ -1,0 +1,46 @@
+main > .container {
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+main .container img {
+  width: 100%;
+}
+
+.item-details,
+.price,
+.stock {
+  padding: 8px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-details > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-details > div p {
+  font-size: 0.75rem;
+}
+
+.price-and-stock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.price,
+.stock {
+  width: 50%;
+  text-align: center;
+}
