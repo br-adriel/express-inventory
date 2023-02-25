@@ -191,6 +191,8 @@ button,
   background-color: var(--color-secondary);
   border-radius: 8px 0 0 8px;
   box-shadow: var(--shadow);
+  display: flex;
+  gap: 8px;
 }
 
 .list {

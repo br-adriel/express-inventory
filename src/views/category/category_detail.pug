@@ -1,12 +1,33 @@
 extends ../base
 
-block content
-  if category
-    h2 #{category.name}
-    p #{category.description}
-    p #{items_count} produto#{items_count !== 1 ? 's' : null} nessa categoria
+block head
+  link(rel="stylesheet", href="/css/category/category_detail.css")
 
-    a(href=`/category/${category._id}/update`) Editar
-    a(href=`/category/${category._id}/remove`) Remover
-  else
-    h2 Categoria não encontrada
+block content
+  main
+    div.container
+      if !category
+        p.no-elements-warning Categoria não encontrada
+      else
+        div.category.bg-secondary.rounded
+          h2 #{category.name}
+          if category.description
+            p #{category.description}
+        div.items-container
+          p #{items_count} ite#{items_count === 1 ? 'm' : 'ns'}
+          if category_items
+            each item in category_items
+              ul.item-list
+                li
+                  a.item-list__item.bg-secondary.rounded(href=`/item/${item._id}`)
+                    img(src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg', alt="" crossOrigin="anonymous")
+                    div
+                      div
+                        h3 #{item.name}
+                        p.price #{item.priceFormatted}
+                      p.stock #{item.stock} em estoque
+        div.actions
+          a.btn.btn-primary(href=`/category/${category._id}/update`)
+            i(data-feather="edit-2")
+          a.btn.btn-primary(href=`/category/${category._id}/remove`)
+            i(data-feather="trash")

@@ -32,7 +32,16 @@ app.set('view engine', 'pug');
 
 /* Middlewares */
 app.use(logger('dev'));
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        imgSrc: [`'self'`, `data:`, `https://cdn.pixabay.com`],
+      },
+    },
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

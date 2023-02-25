@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { validationResult } from 'express-validator/src/validation-result';
 import Category, { CategoryType } from '../models/Category';
-import Item from '../models/Item';
+import Item, { ItemType } from '../models/Item';
 
 /** Lista todas as categorias */
 export const categories_list_get = (
@@ -31,15 +31,24 @@ export const category_detail_get = (
       category(callback) {
         Category.findById(req.params.id).exec(callback);
       },
+      category_items(callback) {
+        Item.find({ category: req.params.id }).exec(callback);
+      },
       items_count(callback) {
         Item.find({ category: req.params.id }).count().exec(callback);
       },
     },
-    (err, results) => {
+    (err, results: any) => {
       if (err) return next(err);
-      res.render('category/category_detail', {
+      if (!results.category)
+        return res.render('404', {
+          title: 'Categoria não encontrada - Inventory',
+          activeLink: 'category',
+        });
+      return res.render('category/category_detail', {
         ...results,
         activeLink: 'category',
+        title: `Categoria "${results.category.name}" - Inventory`,
       });
     }
   );
