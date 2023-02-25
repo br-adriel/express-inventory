@@ -40,7 +40,7 @@ export const item_detail_get = (
       res.render('item/item_detail', {
         item,
         activeLink: 'item',
-        title: `Detalhes do item "${item.name}" - Inventory`,
+        title: `${item.name} - Inventory`,
       });
     });
 };
