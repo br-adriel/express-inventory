@@ -15,6 +15,7 @@ export const categories_list_get = (
     if (err) return next(err);
     return res.render('category/category_list', {
       categories,
+      activeLink: 'category',
     });
   });
 };
@@ -38,6 +39,7 @@ export const category_detail_get = (
       if (err) return next(err);
       res.render('category/category_detail', {
         ...results,
+        activeLink: 'category',
       });
     }
   );
@@ -49,7 +51,9 @@ export const category_create_get = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.render('category/category_create');
+  return res.render('category/category_create', {
+    activeLink: 'category',
+  });
 };
 
 /** Recebe dados para criação de uma categoria */
@@ -93,7 +97,10 @@ export const category_update_get = (
     if (err) return next(err);
     if (!category) return res.render('404');
 
-    return res.render('category/category_update', { category });
+    return res.render('category/category_update', {
+      category,
+      activeLink: 'category',
+    });
   });
 };
 
@@ -150,6 +157,7 @@ export const category_remove_get = (
       return res.render('category/category_remove', {
         category: results.category,
         items_count: results.items_count,
+        activeLink: 'category',
       });
     }
   );
