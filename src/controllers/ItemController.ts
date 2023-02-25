@@ -48,6 +48,8 @@ export const item_create_get = (
     if (err) return next(err);
     return res.render('item/item_create', {
       categories,
+      activeLink: 'item',
+      title: 'Adicionar item - Inventory',
     });
   });
 };

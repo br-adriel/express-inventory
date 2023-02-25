@@ -38,6 +38,12 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         imgSrc: [`'self'`, `data:`, `https://cdn.pixabay.com`],
+        scriptSrc: [
+          `self`,
+          `'unsafe-eval'`,
+          `'unsafe-inline'`,
+          `http://localhost:3000`,
+        ],
       },
     },
   })

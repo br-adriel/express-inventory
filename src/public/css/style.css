@@ -32,6 +32,12 @@ button {
   font-family: 'Outfit', sans-serif;
 }
 
+option {
+  border-radius: 4px;
+  padding: 4px;
+  margin-bottom: 2px;
+}
+
 a {
   text-decoration: none;
 }
@@ -283,6 +289,7 @@ main .item-list__item > div > div {
   flex-direction: column;
   gap: 2px;
 }
+
 main .item-list__item .stock {
   font-size: 0.75rem;
 }
