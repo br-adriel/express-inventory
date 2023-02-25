@@ -1,0 +1,16 @@
+main .container,
+.content {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.content,
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+form button {
+  align-self: flex-end;
+}

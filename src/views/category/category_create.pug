@@ -1,12 +1,19 @@
 extends ../base
 
+block head
+  link(rel="stylesheet", href="/css/category/category_create.css")
+
 block content
-  h2 Adicionar categoria
-  form(action="", method="post")
-    div
-      label(for="name") Nome:
-      input(type="text" name="name" id="name" maxLength="50" required)
-    div
-      label(for="description") Descrição:
-      textarea(name="description", cols="30", rows="10" id="description") 
-    button(type="submit") Salvar
+  main
+    div.container
+      div.bg-secondary.rounded.content
+        h2 Adicionar categoria
+        form(action="", method="post")
+          include ../includes/form-errors
+          div.form-group
+            label(for="name") Nome:
+            input(type="text" name="name" id="name" maxLength="50" required value=category ? category.name : '')
+          div.form-group
+            label(for="description") Descrição:
+            textarea(name="description", maxLength="180" cols="30", rows="4" id="description" value=category ? category.description : '')
+          button.btn.btn-primary(type="submit") Salvar
