@@ -20,11 +20,11 @@ html(lang="pt-br")
       nav
         ul
           li(class=activeLink === 'category' ? 'active' : '')
-            a(href="/category")
+            a(href="/category" title="Categorias")
               i(data-feather="tag")
               span Categorias
           li(class=activeLink === 'item' ? 'active' : '')
-            a(href="/item")
+            a(href="/item" title="Itens")
               i(data-feather="box")
               span Itens
     block content
