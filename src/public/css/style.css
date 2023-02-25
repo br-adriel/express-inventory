@@ -100,14 +100,21 @@ button,
   justify-content: center;
   align-items: center;
   gap: 8px;
+  transition: .3s all ease-out;
 }
 
 .btn.btn-primary {
   background-color: var(--color-primary);
 }
 
+.btn.btn-primary:hover {
+  color: var(--color-primary);
+  background-color: var(--color-text);
+}
+
 .btn.btn-secondary {
-  background-color: var(--color-secondary);
+  color: var(--color-secondary);
+  background-color: var(--color-text);
 }
 
 .actions {
