@@ -7,7 +7,8 @@
   --color-secondary: #30336B;
   --color-error: #C23616;
 
-  --shadow-negative: 0 -2px 4px rgb(56, 59, 114, 0.2);
+  --shadow: 0 2px 4px rgba(56, 59, 114, 0.2);
+  --shadow-negative: 0 -2px 4px rgba(56, 59, 114, 0.2);
 }
 
 body {
@@ -16,6 +17,7 @@ body {
   background-color: var(--color-primary);
   color: var(--color-text);
   font-size: 1rem;
+  padding-bottom: 120px;
 }
 
 a {
@@ -85,4 +87,41 @@ header nav a {
 .container {
   width: min(100%, 1200px);
   margin: 0 auto;
+}
+
+button,
+.btn {
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn.btn-primary {
+  background-color: var(--color-primary);
+}
+
+.btn.btn-secondary {
+  background-color: var(--color-secondary);
+}
+
+.actions {
+  position: fixed;
+  right: 0;
+  bottom: 120px;
+  padding: 8px 16px 8px 8px;
+  background-color: var(--color-secondary);
+  border-radius: 8px 0 0 8px;
+  box-shadow: var(--shadow);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
