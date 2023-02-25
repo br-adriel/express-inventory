@@ -53,6 +53,7 @@ export const category_create_get = (
 ) => {
   return res.render('category/category_create', {
     activeLink: 'category',
+    title: 'Adicionar categoria - Inventory',
   });
 };
 
