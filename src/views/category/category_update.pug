@@ -7,13 +7,13 @@ block content
   main
     div.container
       div.bg-secondary.rounded.content
-          h2 Editar categoria
-          form(action="", method="post")
-            include ../includes/form-errors
-            div.form-group
-              label(for="name") Nome:
-              input(type="text" name="name" id="name" maxLength="50" required value=category ? category.name : '')
-            div.form-group
-              label(for="description") Descrição:
-              textarea(name="description", maxLength="180" cols="30", rows="4" id="description") #{category ? category.description : '' }
-            button.btn.btn-primary(type="submit") Salvar
+        h2 Editar categoria
+        form(action="", method="post")
+          include ../includes/form-errors
+          div.form-group
+            label(for="name") Nome:
+            input(type="text" name="name" id="name" maxLength="50" required value=category ? category.name : '')
+          div.form-group
+            label(for="description") Descrição:
+            textarea(name="description", maxLength="180" cols="30", rows="4" id="description") #{category ? category.description : '' }
+          button.btn.btn-primary(type="submit") Salvar
