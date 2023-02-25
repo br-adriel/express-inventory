@@ -1,11 +1,25 @@
 extends ../base
 
+block head
+  link(rel="stylesheet", href="/css/item/item_list.css")
+
 block content
-  h1 Listagem de itens
-  a(href="/item/create") Novo item
-  ul
-    each item in items
-      li
-        a(href=item.url) #{item.name}
-    else
-      li Nenhum item encontrado
+  main
+    div.container
+      div.actions
+        a.btn.btn-primary(href="/item/create")
+          i(data-feather="plus")
+      if items && items.length
+        ul.item-list
+          each item in items
+            li
+              a(href=item.url).item-list__item.bg-secondary.rounded
+                img(src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg', alt="" crossOrigin="anonymous")
+                div
+                  div
+                    h3 #{item.name}
+                    p.price #{item.priceFormatted}
+                    p.item-categories #{item.category.map(c => c.name).join(', ')}
+                  p.stock #{item.stock} em estoque
+      else
+        p.no-elements-warning Nenhum item encontrado

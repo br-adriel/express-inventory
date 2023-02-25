@@ -10,12 +10,16 @@ export const item_list_get = (
   res: Response,
   next: NextFunction
 ) => {
-  Item.find().exec((err, items) => {
-    if (err) return next(err);
-    return res.render('item/item_list', {
-      items,
+  Item.find()
+    .populate('category')
+    .exec((err, items) => {
+      if (err) return next(err);
+      return res.render('item/item_list', {
+        items,
+        activeLink: 'item',
+        title: 'Itens - Inventory',
+      });
     });
-  });
 };
 
 /** Retorna detalhes de um item específica */

@@ -1,0 +1,10 @@
+main > .container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.item-categories {
+  font-size: 0.75rem;
+}
