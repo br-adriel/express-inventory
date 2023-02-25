@@ -16,6 +16,7 @@ export const categories_list_get = (
     return res.render('category/category_list', {
       categories,
       activeLink: 'category',
+      title: 'Categorias - Inventory',
     });
   });
 };
