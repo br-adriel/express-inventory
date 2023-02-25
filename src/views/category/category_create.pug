@@ -1,7 +1,7 @@
 extends ../base
 
 block head
-  link(rel="stylesheet", href="/css/category/category_create.css")
+  link(rel="stylesheet", href="/css/category/category_form.css")
 
 block content
   main
@@ -15,5 +15,5 @@ block content
             input(type="text" name="name" id="name" maxLength="50" required value=category ? category.name : '')
           div.form-group
             label(for="description") Descrição:
-            textarea(name="description", maxLength="180" cols="30", rows="4" id="description" value=category ? category.description : '')
+            textarea(name="description", maxLength="180" cols="30", rows="4" id="description") #{category ? category.description : '' }
           button.btn.btn-primary(type="submit") Salvar

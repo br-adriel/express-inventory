@@ -110,6 +110,7 @@ export const category_update_get = (
     return res.render('category/category_update', {
       category,
       activeLink: 'category',
+      title: 'Editar categoria - Inventory',
     });
   });
 };
