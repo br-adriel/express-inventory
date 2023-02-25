@@ -121,6 +121,8 @@ export const item_update_get = (
       if (err) return next(err);
       return res.render('item/item_update', {
         ...results,
+        activeLink: 'item',
+        title: 'Editar item - Inventory',
       });
     }
   );
