@@ -179,7 +179,12 @@ button,
   background-color: var(--color-text);
 }
 
-.btn.btn-secondary {
+.btn.btn-secondary:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.btn.btn-secondary:hover {
   color: var(--color-secondary);
   background-color: var(--color-text);
 }
