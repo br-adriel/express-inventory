@@ -179,7 +179,11 @@ export const item_remove_get = (
 ) => {
   Item.findById(req.params.id).exec((err, item) => {
     if (err) return next(err);
-    return res.render('item/item_remove', { item });
+    return res.render('item/item_remove', {
+      item,
+      activeLink: 'item',
+      title: 'Remover item - Inventory',
+    });
   });
 };
 

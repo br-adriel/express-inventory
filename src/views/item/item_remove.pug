@@ -1,8 +1,17 @@
 extends ../base
 
+block head
+  link(rel="stylesheet", href="/css/form.css")
+
 block content
-  h2 Remover o item "#{item.name}"?
-  p #{item.description}
-  form(action="", method="post")
-    a(href=`/item/${item.id}`) Cancelar
-    button(type="submit") Remover
+  main
+    div.container
+      div.bg-secondary.rounded.content
+        p
+          | Tem certeza que você quer remover o item
+          span.text-bold  #{item.name}
+          | ?
+        form(action="", method="post")
+          div.btn-group
+            a(href=`/item/${item.id}`).btn.btn-secondary Cancelar
+            button(type="submit").btn.btn-primary Remover
