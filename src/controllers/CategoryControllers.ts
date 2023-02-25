@@ -169,6 +169,7 @@ export const category_remove_get = (
         category: results.category,
         items_count: results.items_count,
         activeLink: 'category',
+        title: 'Remover categoria - Inventory',
       });
     }
   );
