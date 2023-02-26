@@ -3,6 +3,18 @@ import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import Category from '../models/Category';
 import Item from '../models/Item';
+import { readFile } from 'fs/promises';
+import multer from 'multer';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/img/item');
+  },
+  filename: function (req, file, cb) {
+    cb(null, 'image-' + Date.now() + '.' + file.originalname.split('.')[1]);
+  },
+});
+const upload = multer({ storage });
 
 /** Lista todos os items */
 export const item_list_get = (
@@ -63,6 +75,8 @@ export const item_create_get = (
 
 /** Recebe dados para criação de um item */
 export const item_create_post = [
+  upload.single('image'),
+
   body('name')
     .trim()
     .escape()
@@ -89,12 +103,20 @@ export const item_create_post = [
       });
     }
 
+    let imagePath = '';
+    if (req.file) {
+      const fullPathArray = req.file.path.split('\\');
+      fullPathArray.shift();
+      imagePath = '/' + fullPathArray.join('/');
+    }
+
     const newItem = new Item({
       name: req.body.name,
       description: req.body.description,
       category: req.body.category,
       price: req.body.price,
       stock: req.body.stock,
+      image: req.file ? imagePath : undefined,
     });
     newItem.save((err) => {
       if (err) return next(err);
