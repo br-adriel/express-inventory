@@ -106,6 +106,8 @@ export const item_create_post = [
 
     if (!errors.isEmpty()) {
       return res.render('item/item_create', {
+        title: 'Adicionar item',
+        activeLink: 'item',
         categories,
         errors: errors.array(),
         item: req.body,
@@ -171,12 +173,37 @@ export const item_update_post = [
 
   body('stock').isNumeric().isInt({ min: 0 }),
 
+  body('password')
+    .trim()
+    .isLength({ min: 8 })
+    .escape()
+    .custom((value) => process.env.ADMIN_PASSWORD === value)
+    .withMessage('Chave de segurança incorreta'),
+
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
+      let categories = [];
+      try {
+        categories = await Category.find({});
+        categories = categories.map((c) => {
+          return {
+            _id: c._id.toString(),
+            name: c.name,
+            description: c.description,
+          };
+        });
+      } catch (err) {
+        return next(err);
+      }
+
       return res.render('item/item_update', {
+        categories,
+        title: 'Editar item - Inventory',
+        activeLink: 'item',
         errors: errors.array(),
-        item: req.body,
+        item: { category: [], ...req.body },
       });
     }
 
@@ -190,13 +217,16 @@ export const item_update_post = [
     });
 
     if (req.file) {
-      const itemToUpdate = await Item.findById(req.params.id);
-      if (itemToUpdate && itemToUpdate.image) {
-        await unlink('public/' + itemToUpdate.image);
+      try {
+        const itemToUpdate = await Item.findById(req.params.id);
+        if (itemToUpdate && itemToUpdate.image) {
+          await unlink('public/' + itemToUpdate.image);
+        }
+        updatedItem.image = generateItemImagePath(req.file);
+      } catch (err) {
+        return next(err);
       }
-      updatedItem.image = generateItemImagePath(req.file);
     }
-
     Item.findByIdAndUpdate(req.params.id, updatedItem, {}, (err) => {
       if (err) return next(err);
       return res.redirect(updatedItem.url);
@@ -221,18 +251,35 @@ export const item_remove_get = (
 };
 
 /** Remove item com o respectivo id passado */
-export const item_remove_post = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  Item.findById(req.params.id).exec(async (err, itemToDelete) => {
-    if (err) return next(err);
-    if (itemToDelete) {
-      if (itemToDelete.image) await unlink('public/' + itemToDelete.image);
-      itemToDelete.delete();
-      return res.redirect('/item');
-    }
-    return res.render('404');
-  });
-};
+export const item_remove_post = [
+  body('password')
+    .trim()
+    .isLength({ min: 8 })
+    .escape()
+    .custom((value) => process.env.ADMIN_PASSWORD === value)
+    .withMessage('Chave de segurança incorreta'),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+
+    Item.findById(req.params.id).exec(async (err, itemToDelete) => {
+      if (err) return next(err);
+
+      if (itemToDelete) {
+        if (!errors.isEmpty()) {
+          return res.render(`item/item_remove`, {
+            errors: errors.array(),
+            activeLink: 'item',
+            title: 'Remover item - Inventory',
+            item: itemToDelete,
+          });
+        }
+
+        if (itemToDelete.image) await unlink('public/' + itemToDelete.image);
+        itemToDelete.delete();
+        return res.redirect('/item');
+      }
+      return res.render('404');
+    });
+  },
+];

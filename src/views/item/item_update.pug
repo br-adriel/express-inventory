@@ -40,4 +40,7 @@ block content
                 img(src=item.image, title="Imagem atual" alt="")
               div
                 input(type="file" name="image" id="image" accept="image/png, image/jpeg")
+          div.form-group
+            label(for="password") Chave de segurança:
+            input(type="password", name="password" id="password" minLength="8" required)
           button(type="submit").btn.btn-primary Salvar

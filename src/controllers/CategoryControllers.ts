@@ -2,8 +2,8 @@ import async from 'async';
 import { NextFunction, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { validationResult } from 'express-validator/src/validation-result';
-import Category, { CategoryType } from '../models/Category';
-import Item, { ItemType } from '../models/Item';
+import Category from '../models/Category';
+import Item from '../models/Item';
 
 /** Lista todas as categorias */
 export const categories_list_get = (
@@ -126,6 +126,13 @@ export const category_update_post = [
 
   body('description').optional().trim().escape(),
 
+  body('password')
+    .trim()
+    .isLength({ min: 8 })
+    .escape()
+    .custom((value) => process.env.ADMIN_PASSWORD === value)
+    .withMessage('Chave de segurança incorreta'),
+
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -177,13 +184,43 @@ export const category_remove_get = (
 };
 
 /** Remove categoria com o respectivo id passado */
-export const category_remove_post = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  Category.findByIdAndRemove(req.params.id, (err: any) => {
-    if (err) return next(err);
-    return res.redirect('/category');
-  });
-};
+export const category_remove_post = [
+  body('password')
+    .trim()
+    .isLength({ min: 8 })
+    .escape()
+    .custom((value) => process.env.ADMIN_PASSWORD === value)
+    .withMessage('Chave de segurança incorreta'),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      async.parallel(
+        {
+          category(callback) {
+            Category.findById(req.params.id).exec(callback);
+          },
+          items_count(callback) {
+            Item.find({ category: req.params.id }).count().exec(callback);
+          },
+        },
+        (err, results) => {
+          if (err) return next(err);
+          return res.render('category/category_remove', {
+            category: results.category,
+            items_count: results.items_count,
+            activeLink: 'category',
+            title: 'Remover categoria - Inventory',
+            errors: errors.array(),
+          });
+        }
+      );
+    } else {
+      Category.findByIdAndRemove(req.params.id, (err: any) => {
+        if (err) return next(err);
+        return res.redirect('/category');
+      });
+    }
+  },
+];

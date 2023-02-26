@@ -10,6 +10,10 @@ block content
         h2 Remover a categoria "#{category.name}"?
         p #{items_count} itens possuem essa categoria
         form(action="", method="post")
+          include ../includes/form-errors
+          div.form-group
+            label(for="password") Chave de segurança:
+            input(type="password", name="password" id="password" minLength="8" required)
           div.btn-group
             a(href=`/category/${category.id}`).btn.btn-secondary Cancelar
             button(type="submit").btn.btn-primary Remover

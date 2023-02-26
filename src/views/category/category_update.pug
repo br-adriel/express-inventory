@@ -16,4 +16,7 @@ block content
           div.form-group
             label(for="description") Descrição:
             textarea(name="description", maxLength="180" cols="30", rows="4" id="description") #{category ? category.description : '' }
+          div.form-group
+            label(for="password") Chave de segurança:
+            input(type="password", name="password" id="password" minLength="8" required)
           button.btn.btn-primary(type="submit") Salvar
