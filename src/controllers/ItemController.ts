@@ -1,11 +1,10 @@
 import async from 'async';
 import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
+import { unlink } from 'fs/promises';
 import multer from 'multer';
 import Category from '../models/Category';
 import Item from '../models/Item';
-import { unlink } from 'fs/promises';
-import path from 'path';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -227,8 +226,13 @@ export const item_remove_post = (
   res: Response,
   next: NextFunction
 ) => {
-  Item.findByIdAndRemove(req.params.id, {}, (err) => {
+  Item.findById(req.params.id).exec(async (err, itemToDelete) => {
     if (err) return next(err);
-    return res.redirect('/item');
+    if (itemToDelete) {
+      if (itemToDelete.image) await unlink('public/' + itemToDelete.image);
+      itemToDelete.delete();
+      return res.redirect('/item');
+    }
+    return res.render('404');
   });
 };
