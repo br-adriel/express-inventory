@@ -9,7 +9,7 @@ block content
     div.container
       div.bg-secondary.rounded.content
         h2 Editar item
-        form(action="", method="post")
+        form(action="", method="post" enctype="multipart/form-data")
           include ../includes/form-errors
           div.form-group
             label(for="name") Nome:
@@ -33,4 +33,11 @@ block content
           div.form-group
             label(for="stock") Quantidade em estoque:
             input(type="number", name="stock" id="stock" min="0" required value=item ? item.stock : '') 
+          div.form-group
+            label(for="image") Imagem:
+            div.image
+              if item.image
+                img(src=item.image, title="Imagem atual" alt="")
+              div
+                input(type="file" name="image" id="image" accept="image/png, image/jpeg")
           button(type="submit").btn.btn-primary Salvar

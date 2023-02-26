@@ -1,10 +1,11 @@
 import async from 'async';
 import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
+import multer from 'multer';
 import Category from '../models/Category';
 import Item from '../models/Item';
-import { readFile } from 'fs/promises';
-import multer from 'multer';
+import { unlink } from 'fs/promises';
+import path from 'path';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,6 +16,15 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+function generateItemImagePath(file: Express.Multer.File | undefined): string {
+  if (file) {
+    const fullPathArray = file.path.split('\\');
+    fullPathArray.shift();
+    return '/' + fullPathArray.join('/');
+  }
+  return '';
+}
 
 /** Lista todos os items */
 export const item_list_get = (
@@ -103,20 +113,13 @@ export const item_create_post = [
       });
     }
 
-    let imagePath = '';
-    if (req.file) {
-      const fullPathArray = req.file.path.split('\\');
-      fullPathArray.shift();
-      imagePath = '/' + fullPathArray.join('/');
-    }
-
     const newItem = new Item({
       name: req.body.name,
       description: req.body.description,
       category: req.body.category,
       price: req.body.price,
       stock: req.body.stock,
-      image: req.file ? imagePath : undefined,
+      image: generateItemImagePath(req.file),
     });
     newItem.save((err) => {
       if (err) return next(err);
@@ -153,6 +156,8 @@ export const item_update_get = (
 
 /** Recebe dados para atualização de um item */
 export const item_update_post = [
+  upload.single('image'),
+
   body('name')
     .trim()
     .isLength({ min: 1, max: 80 })
@@ -167,9 +172,7 @@ export const item_update_post = [
 
   body('stock').isNumeric().isInt({ min: 0 }),
 
-  (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.category);
-
+  async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.render('item/item_update', {
@@ -186,6 +189,14 @@ export const item_update_post = [
       price: req.body.price,
       stock: req.body.stock,
     });
+
+    if (req.file) {
+      const itemToUpdate = await Item.findById(req.params.id);
+      if (itemToUpdate && itemToUpdate.image) {
+        await unlink('public/' + itemToUpdate.image);
+      }
+      updatedItem.image = generateItemImagePath(req.file);
+    }
 
     Item.findByIdAndUpdate(req.params.id, updatedItem, {}, (err) => {
       if (err) return next(err);
