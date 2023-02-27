@@ -220,7 +220,8 @@ button,
   gap: 8px;
 }
 
-.list {
+.list,
+.item-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -259,12 +260,6 @@ button,
 
 .rounded {
   border-radius: 8px;
-}
-
-main .item-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 main .item-list__item {
@@ -321,14 +316,29 @@ main .item-list__item .stock {
     max-width: 400px;
   }
 
-  .list {
+  .list,
+  .item-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
-  .list li {
+  .list li,
+  .item-list li {
     width: calc(50% - 4px);
     display: inline-block;
+  }
+
+  main .item-list__item img {
+    width: 100px;
+    height: 100px;
+  }
+
+  main .item-list__item > div {
+    gap: 10px;
+  }
+
+  main .item-list__item > div > div {
+    gap: 4px;
   }
 }
