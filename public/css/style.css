@@ -22,6 +22,10 @@ body {
   padding-bottom: 120px;
 }
 
+svg {
+  font-size: 1rem;
+}
+
 form,
 label,
 input,
@@ -303,10 +307,6 @@ button,
 }
 
 @media screen and (min-width: 768px) {
-  :root {
-    font-size: 20px;
-  }
-
   button,
   .btn {
     padding: 12px;
@@ -349,5 +349,26 @@ button,
 
   .item-list__item > div > div {
     gap: 4px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  button,
+  .btn {
+    padding: 8px;
+  }
+
+  header nav {
+    justify-content: right;
+  }
+
+  header nav ul {
+    border-radius: 8px 0 0 8px;
+  }
+
+  .list li,
+  .item-list li {
+    width: calc(100% / 3 - (16px / 3));
+    display: inline-block;
   }
 }
