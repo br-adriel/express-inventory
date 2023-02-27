@@ -262,7 +262,7 @@ button,
   border-radius: 8px;
 }
 
-main .item-list__item {
+.item-list__item {
   display: flex;
   padding: 8px;
   gap: 16px;
@@ -270,31 +270,31 @@ main .item-list__item {
   align-items: center;
 }
 
-main .item-list__item img {
+.item-list__item img {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
 }
 
-main .item-list__item h3 {
+.item-list__item h3 {
   font-weight: 700;
   font-size: 1rem;
 }
 
-main .item-list__item > div {
+.item-list__item > div {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-main .item-list__item > div > div {
+.item-list__item > div > div {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-main .item-list__item .stock {
+.item-list__item .stock {
   font-size: 0.75rem;
 }
 
@@ -334,16 +334,20 @@ main .item-list__item .stock {
     display: inline-block;
   }
 
-  main .item-list__item img {
+  .item-list__item {
+    padding: 12px;
+  }
+
+  .item-list__item img {
     width: 100px;
     height: 100px;
   }
 
-  main .item-list__item > div {
+  .item-list__item > div {
     gap: 10px;
   }
 
-  main .item-list__item > div > div {
+  .item-list__item > div > div {
     gap: 4px;
   }
 }
