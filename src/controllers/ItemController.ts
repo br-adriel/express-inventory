@@ -20,7 +20,7 @@ const upload = multer({ storage });
 
 function generateItemImagePath(file: Express.Multer.File | undefined): string {
   if (file) {
-    const fullPathArray = file.path.split('\\');
+    const fullPathArray = file.path.split('/');
     fullPathArray.shift();
     return '/' + fullPathArray.join('/');
   }
