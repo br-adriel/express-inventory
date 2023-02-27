@@ -15,7 +15,7 @@ main a {
   padding: 8px 16px;
   background-color: var(--color-secondary);
   border-radius: 8px;
-  transition: .3s ease-out all;
+  transition: 0.3s ease-out all;
   font-weight: 700;
   font-size: 1rem;
 }
@@ -23,4 +23,10 @@ main a {
 .category-item:hover {
   background-color: var(--color-text);
   color: var(--color-secondary);
+}
+
+@media screen and (min-width: 768px) {
+  .category-item {
+    padding: 16px;
+  }
 }
