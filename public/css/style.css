@@ -138,6 +138,12 @@ header nav ul li a {
   padding: 16px;
   border-radius: 8px;
   flex-grow: 1;
+  transition: 0.3s all ease-out;
+}
+
+header nav ul li a:hover {
+  background: var(--color-text);
+  color: var(--color-primary);
 }
 
 header nav ul li span {
