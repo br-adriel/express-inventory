@@ -44,3 +44,11 @@ form .btn-group {
 .form-group .image input {
   display: flex;
 }
+
+@media screen and (min-width: 768px) {
+  .content {
+    padding: 24px;
+    max-width: 568px;
+    margin: 0 auto;
+  }
+}
