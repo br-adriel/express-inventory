@@ -307,6 +307,11 @@ main .item-list__item .stock {
     font-size: 20px;
   }
 
+  button,
+  .btn {
+    padding: 12px;
+  }
+
   header nav {
     bottom: 8px;
   }
